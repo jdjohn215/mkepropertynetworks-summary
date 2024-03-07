@@ -1,0 +1,113 @@
+---
+title: "Largest 15 Networks"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(gt)
+library(sf)
+library(leaflet)
+knitr::opts_chunk$set(warning = F, echo = F, message = F)
+
+mprop <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/LandlordProperties-with-OwnerNetworks.csv")
+overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+  pivot_wider(names_from = name, values_from = value)
+network.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/Landlord-network-summary-statistics.csv")
+
+top15 <- network.summary |> 
+  slice_max(order_by = units, n = 15)
+
+top15.parcels <- mprop |> filter(final_group %in% top15$final_group) |>
+  mutate(houserange = if_else(HOUSE_NR_LO == HOUSE_NR_HI, paste(HOUSE_NR_LO), 
+                              paste(HOUSE_NR_LO, HOUSE_NR_HI, sep = "-")),
+         housenum = if_else(is.na(HOUSE_NR_SFX), houserange, paste(houserange, HOUSE_NR_SFX)),
+         streetstype = if_else(is.na(STTYPE), STREET, paste(STREET, STTYPE)),
+         address = paste(houserange, SDIR, streetstype)) |>
+  rowwise() |>
+  mutate(evict_filings = if_else(is.na(evict_filings), "redacted", 
+                                 paste(as.character(evict_filings),
+                                       "since", max(c(as.Date(CONVEY_DATE),
+                                                      as.Date("2016-01-01")),
+                                                    na.rm = T))),
+         evict_orders = if_else(is.na(evict_orders), "redacted", 
+                                paste(as.character(evict_orders),
+                                      "since", max(c(as.Date(CONVEY_DATE),
+                                                     as.Date("2016-01-01")),
+                                                   na.rm = T))),
+         ownership_violations = paste(ownership_violations, "since",
+                                      max(c(as.Date(CONVEY_DATE), as.Date("2017-01-01")),
+                                          na.rm = T))) |>
+  ungroup() |>
+  select(TAXKEY, address, NR_UNITS, final_group, mprop_name, evict_filings, evict_orders,
+         ownership_violations, lat, lon)
+
+top15.parcel.coords <- top15.parcels |>
+  mutate(address_label = paste0("<a href=https://mkepropertyownership.com/properties/",
+                                TAXKEY, ">", htmltools::htmlEscape(address), "</a>"),
+         network_label = paste0("<a href=https://mkepropertyownership.com/owner_groups/",
+                                str_replace_all(final_group, " ", "%20"), ">",
+                                htmltools::htmlEscape(final_group), "</a>")) |>
+  mutate(label = paste(address_label, "<br>",
+                       "owner:", htmltools::htmlEscape(mprop_name), "<br>",
+                       "network:", network_label, "<br>",
+                       "units:", NR_UNITS, "<br>",
+                       "eviction filings:", evict_filings, "<br>",
+                       "eviction orders:", evict_orders, "<br>",
+                       "code violations:", ownership_violations)) |>
+  group_by(final_group, lat, lon) |>
+  summarise(label = paste(label, collapse = "<hr>"), .groups = "drop",
+            total_units = sum(NR_UNITS)) |>
+  st_as_sf(coords = c("lon","lat"), crs = 4326)
+
+c15 <- c(
+  "blue", "#E31A1C", # red
+  "green",
+  "#6A3D9A", # purple
+  "#FF7F00", # orange
+  "black", "gold",
+  "skyblue", "#FB9A99", # lt pink
+  "brown",
+  "#CAB2D6", # lt purple
+  "#FDBF6F", # lt orange
+  "deeppink", "darkturquoise",
+  "maroon"
+)
+sqrt_or_3 <- function(x){max(c(sqrt(x),3))}
+
+circlemarkerformat <- function(map, groupnum){
+  map |>
+    addCircleMarkers(data = top15.parcel.coords |> filter(final_group == top15$final_group[groupnum]),
+                     label = ~lapply(label, htmltools::HTML),
+                     popup = ~lapply(label, htmltools::HTML),
+                     radius = ~lapply(total_units, sqrt_or_3),
+                     group = top15$final_group[groupnum], fillColor = c15[groupnum], color = c15[groupnum])
+}
+```
+
+This map shows the locations of each property owned by the 15 largest owner networks in the city. Use the menu to toggle the visibility of each owner network. Click each property to view information about it, including the number of evictions and code violations under the current ownership. Eviction statistics are redacted for properties with few units.
+
+```{r leaflet-top-15}
+#| column: screen-inset
+#| fig-height: 16
+
+leaflet() |>
+  addProviderTiles(provider = providers$CartoDB.Positron) |>
+  # group by network
+  circlemarkerformat(1) |>
+  circlemarkerformat(2) |>
+  circlemarkerformat(3) |>
+  circlemarkerformat(4) |>
+  circlemarkerformat(5) |>
+  circlemarkerformat(6) |>
+  circlemarkerformat(7) |>
+  circlemarkerformat(8) |>
+  circlemarkerformat(9) |>
+  circlemarkerformat(10) |>
+  circlemarkerformat(11) |>
+  circlemarkerformat(12) |>
+  circlemarkerformat(13) |>
+  circlemarkerformat(14) |>
+  circlemarkerformat(15) |>
+  addLayersControl(overlayGroups = top15$final_group,
+                   options = layersControlOptions(collapsed = F))
+```

@@ -1,0 +1,143 @@
+---
+title: "Citywide Summary"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(gt)
+knitr::opts_chunk$set(warning = F, echo = F, message = F)
+
+mprop <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/LandlordProperties-with-OwnerNetworks.csv")
+overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+  pivot_wider(names_from = name, values_from = value)
+network.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/Landlord-network-summary-statistics.csv") |>
+  mutate(
+    parcel_size_cat = case_when(
+      parcels == 1 ~ "1 parcel",
+      parcels < 4 ~ "2 or 3 parcels",
+      parcels < 11 ~ "4-10 parcels",
+      parcels < 26 ~ "11-25 parcels",
+      parcels < 51 ~ "26-50 parcels",
+      parcels < 101 ~ "51-100 parcels",
+      TRUE ~ "more than 100 parcels"),
+    parcel_size_cat = fct_reorder(parcel_size_cat, parcels),
+    unit_size_cat = case_when(
+      units < 3 ~ "1 or 2 units",
+      units < 11 ~ "3-10 units",
+      units < 26 ~ "11-25 units",
+      units < 101 ~ "26-100 units",
+      units < 501 ~ "101-500 units",
+      TRUE ~ "more than 500 units"),
+    unit_size_cat = fct_reorder(unit_size_cat, units))
+
+pnum <- function(x){prettyNum(x, big.mark = ",")}
+ppct <- function(x, digits = 0){paste0(round(x, digits = digits), "%")}
+
+parcel.table <- network.summary |>
+  group_by(parcel_size_cat) |>
+  summarise(networks = n(),
+            parcels = sum(parcels)) |>
+  mutate(pnetworks = (networks/sum(networks))*100,
+         pparcels = (parcels/sum(parcels))*100)
+unit.table <- network.summary |>
+  group_by(unit_size_cat) |>
+  summarise(networks = n(),
+            units = sum(units)) |>
+  mutate(pnetworks = (networks/sum(networks))*100,
+         punits = (units/sum(units))*100)
+```
+
+This website includes summary statistics from [MKEPropertyOwnership.com](https://mkepropertyownership.com/). Property data was last updated on `r overall.summary$mprop_updated`. We last checked for new updates on `r overall.summary$workflow_updated`. You can view the underlying source code and download raw data from [this Github repository](https://github.com/jdjohn215/mke-owner-networks).
+
+Currently, we identify `r pnum(overall.summary$total_parcels)` rental properties containing `r pnum(overall.summary$total_units)` housing units. We identify `r pnum(nrow(network.summary))` total ownership networks of which `r pnum(overall.summary$networks_single_parcel)` (`r overall.summary$pct_networks_single_parcel`) own just a single property. Of those networks which own multiple properties, `r pnum(overall.summary$networks_multiple_names)` include multiple distinct owner names.
+
+#   networks by size
+
+Most landlord networks are small. In fact, `r ppct(parcel.table$pnetworks[parcel.table$parcel_size_cat == "1 parcel"])` of networks own just a single parcel. Another `r ppct(parcel.table$pnetworks[parcel.table$parcel_size_cat == "2 or 3 parcels"])` own 2 or 3 parcels. Together, these two categories own `r ppct(sum(parcel.table$pparcels[parcel.table$parcel_size_cat %in% c("1 parcel", "2 or 3 parcels")]))` of all the rental parcels in the city. Collectively, ownership networks with at least 26 parcels own `r ppct(sum(parcel.table$pparcels[parcel.table$parcel_size_cat %in% c("26-50 parcels", "51-100 parcels", "more than 100 parcels")]))` of rental parcels, despite constituting just `r ppct(sum(parcel.table$pnetworks[parcel.table$parcel_size_cat %in% c("26-50 parcels", "51-100 parcels", "more than 100 parcels")]), 1)` of owner networks.
+
+```{r parcel-table}
+parcel.table |>
+  select(parcel_size_cat, `owner networks` = pnetworks, `rental parcels` = pparcels) |>
+  pivot_longer(cols = -parcel_size_cat, values_to = "pct") |>
+  ggplot(aes(parcel_size_cat, pct, fill = name)) +
+  geom_col(position = position_dodge()) +
+  geom_text(aes(label = paste0(round(pct),"%"), color = name),
+            position = position_dodge(width = 1), vjust = 0,
+            show.legend = F) +
+  labs(title = "Landlord network size: total number of networks vs. total number of parcels",
+       subtitle = "City of Milwaukee",
+       x = NULL,
+       y = NULL,
+       fill = "share of") +
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  scale_x_discrete(labels = scales::wrap_format(12)) +
+  theme_bw() +
+  theme(legend.position = c(0.75, 0.75),
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"))
+```
+
+While most rental parcels are owned by smaller owner networks, most rental units are owned by larger networks, as shown in the graph below.
+
+Only `r ppct(sum(unit.table$pnetworks[unit.table$unit_size_cat %in% c("26-100 units", "101-500 units", "more than 500 units")]), 1)` of networks own more than 25 units, but these networks collectively own `r ppct(sum(unit.table$punits[unit.table$unit_size_cat %in% c("26-100 units", "101-500 units", "more than 500 units")]))` of the city's rental inventory.
+
+```{r unit-table}
+unit.table |>
+  select(unit_size_cat, `owner networks` = pnetworks, `rental units` = punits) |>
+  pivot_longer(cols = -unit_size_cat, values_to = "pct") |>
+  ggplot(aes(unit_size_cat, pct, fill = name)) +
+  geom_col(position = position_dodge()) +
+  geom_text(aes(label = paste0(round(pct),"%"), color = name),
+            position = position_dodge(width = 1), vjust = 0,
+            show.legend = F) +
+  labs(title = "Landlord network size: total number of networks vs. total number of units",
+       subtitle = "City of Milwaukee",
+       x = NULL,
+       y = NULL,
+       fill = "share of") +
+  scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+  scale_x_discrete(labels = scales::wrap_format(12)) +
+  theme_bw() +
+  theme(legend.position = c(0.75, 0.75),
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"))
+```
+
+# largest networks
+
+```{r top-15-networks}
+network.summary |> 
+  slice_max(order_by = units, n = 15) |> 
+  select(final_group, name_count, units, parcels, total_assessed_value, annual_evict_filing_rate_per_unit,
+         ownership_violation_unit_rate_annual) |>
+  mutate(link = paste0("https://mkepropertyownership.com/owner_groups/", str_replace_all(final_group, " ", "%20"))) |>
+  mutate(final_group = glue::glue("[{final_group}]({link})"),
+         final_group = map(final_group, gt::md)) |>
+  select(-link) |>
+  gt() |>
+  cols_label(
+    "final_group" ~ "owner network",
+    "name_count" ~ "names in network",
+    "total_assessed_value" ~ "assessed value",
+    "annual_evict_filing_rate_per_unit" ~ "eviction filings",
+    "ownership_violation_unit_rate_annual" ~ "code violations"
+  ) |>
+  tab_spanner(label = "annual rates per 100 units",
+              columns = contains("rate")) |>
+  fmt_number(columns = units, decimals = 0) |>
+  fmt_number(columns = c(units, parcels), decimals = 0) |>
+  fmt_number(columns = contains("rate"), decimals = 1) |>
+  fmt_currency(columns = total_assessed_value, decimals = 1, suffixing = T) |>
+  tab_style(style = cell_text(align = "right", weight = "bold"),
+            locations = list(cells_body(columns = final_group),
+                             cells_column_labels(columns = final_group))) |>
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_title()) |>
+  tab_style(style = cell_borders(sides = "right", weight = "2px"),
+            locations = list(cells_body(columns = final_group),
+                             cells_column_labels(columns = final_group))) |>
+  tab_header(title = "Top 15 largest ownership networks, by total units",
+             subtitle = "City of Milwaukee") |>
+  tab_footnote(footnote = "Owner networks are given the name of the most frequently used individual owner name in the network. Click the hyperlink to see the full list of properties, names, and connections between them.",
+               locations = cells_column_labels(final_group))
+```

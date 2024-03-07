@@ -1,0 +1,74 @@
+---
+title: "Evictions"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(gt)
+knitr::opts_chunk$set(warning = F, echo = F, message = F)
+
+overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+  pivot_wider(names_from = name, values_from = value)
+
+citywide <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-evict-rates_citywide.csv")
+aldermanic <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-evict-rates_aldermanic2024.csv")
+```
+
+
+This website contains eviction statistics drawn from a dataset which matches court records with parcel records. We succesfully match more than 98% of eviction records to a parcel. Our records currently cover `r overall.summary$evict_start` to `r overall.summary$evict_end`. 
+
+# eviction rate calculations
+
+Here is how we calculate eviction rates for each ownership network.
+
+*   For each property, we count the number of days during which the current owner held the property *and* eviction records are available. We determine when the period of current ownership began using the `CONVEY_DATE` variable provided by the city assessor.
+*   We divide the days of ownership (during the eviction-covered period) by 365.25, then multiply by the number of housing units at the property. The product is the number of *housing-unit-years*.
+*   We add up all the housing-unit-years for each property in the network to calculate the network's total housing-unit-years.
+*   We assign evictions to a property's current owner if the eviction was filed after the current owner bought the property, judging by the `CONVEY_DATE` field.
+*   For each owner network, we count the total number of eviction filings (and orders) and divide by the total number of housing-unit-years. Then, we multiply the quotient by 100. The result is the network's annual rate of eviction filings (or orders) per 100 units.
+
+# citywide rates
+
+For reference, here are citywide eviction rates.
+
+To calculate these, we divide the total number of (matched) evictions occuring at residential properties by the total number of rental units. Because this includes vacant rental units, our method results in slightly lower eviction rates than if we divided by the number of renting households.
+
+```{r citywide-evict-rates}
+citywide |>
+  gt(rowname_col = "year") |>
+  tab_header(title = "Annual eviction totals in the City of Milwaukee") |>
+  fmt_number(columns = c(filings, orders, rental_units), decimals = 0) |>
+  fmt_number(columns = contains("rate"), decimals = 1) |>
+  cols_label(
+    "rental_units" ~ "rental units",
+    "filing_rate" ~ "filings",
+    "order_rate" ~ "orders"
+  ) |>
+  tab_spanner(label = "at residential properties",
+              columns = c(filings, orders)) |>
+  tab_spanner(label = "per 100 units",
+              columns = contains("rate")) |>
+  tab_footnote(footnote = "Various pandemic-era policy interventions, including moratoriums, reduced evictions during these years",
+               locations = cells_stub(rows = year %in% 2020:2021)) |>
+  tab_footnote(footnote = "Calculated from city parcel records.",
+               locations = cells_column_labels("rental_units"))
+```
+
+# by aldermanic district
+
+```{r aldermanic-evict-rates}
+#| column: page
+aldermanic |>
+  mutate(aldermanic = english::ordinal(aldermanic)) |>
+  select(year, aldermanic, ends_with("rate")) |>
+  pivot_longer(cols = ends_with("rate")) |>
+  mutate(name = paste0(word(name, 1, sep = "_"),"s")) |>
+  pivot_wider(names_from = c(year, name), values_from = value) |>
+  gt(rowname_col = "aldermanic") |>
+  tab_spanner_delim("_") |>
+  fmt_number(columns = contains("_"), decimals = 1) |>
+  data_color(palette = "Greens", domain = 0:21) |>
+  tab_header(title = "Eviction filing and order rates by Milwaukee aldermanic district") |>
+  tab_footnote(footnote = "Various pandemic-era policy interventions, including moratoriums, reduced evictions during these years",
+               locations = cells_column_spanners(5:6))
+```

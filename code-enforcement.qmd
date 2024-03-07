@@ -1,0 +1,73 @@
+---
+title: "Code Violations"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(tidyverse)
+library(gt)
+knitr::opts_chunk$set(warning = F, echo = F, message = F)
+
+overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+  pivot_wider(names_from = name, values_from = value)
+
+citywide <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-violations-rates_citywide.csv")
+aldermanic <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-violations-rates_aldermanic2024.csv")
+```
+
+Code violation data comes from the Milwaukee Department of Neighborhood Services. A code violation can cover a wide range of issues, from minor garbage violations to more serious structural issues. At this time our website simply shows the total number (and rate) of violations, so we encourage readers to use the [DNS website](https://aca-prod.accela.com/MILWAUKEE/Default.aspx) to look up specific code violations for properties of interest.
+
+DNS inspectors are not allowed to enter properties to conduct random inspections. Instead, they usually conduct interior inspections after receiving tenant complaints. Eviction orders correspond to a single visit, and each order can (and often does) include multiple violations requiring specific abatement.
+
+Our records currently cover `r overall.summary$dns_start` to `r overall.summary$dns_end`. 
+
+# code violation rate calculations
+
+Here is how we calculate code enforcement rates for each ownership network.
+
+*   For each property, we count the number of days during which the current owner held the property *and* DNS records are available. We determine when the period of current ownership began using the `CONVEY_DATE` variable provided by the city assessor.
+*   We divide the days of ownership (during the DNS-covered period) by 365.25, then multiply by the number of housing units at the property. The product is the number of *housing-unit-years*.
+*   We add up all the housing-unit-years for each property in the network to calculate the network's total housing-unit-years.
+*   We assign code violations to a property's current owner if the eviction was filed after the current owner bought the property, judging by the `CONVEY_DATE` field.
+*   For each owner network, we count the total number of violations (and orders) and divide by the total number of housing-unit-years. Then, we multiply the quotient by 100. The result is the network's annual rate of code violations (or orders) per 100 units.
+
+# citywide rates
+
+To calculate citywide rates, we limit the numerator to just code violations occuring at rental properties.
+
+```{r citywide-dns-rates}
+citywide |>
+  gt(rowname_col = "year") |>
+  tab_header(title = "Annual DNS code enforcement totals in the City of Milwaukee") |>
+  fmt_number(columns = c(violations, orders, rental_units), decimals = 0) |>
+  fmt_number(columns = contains("rate"), decimals = 1) |>
+  cols_label(
+    "rental_units" ~ "rental units",
+    "violation_rate" ~ "violations",
+    "order_rate" ~ "orders"
+  ) |>
+  tab_spanner(label = "at rental properties",
+              columns = c(violations, orders)) |>
+  tab_spanner(label = "per 100 units",
+              columns = contains("rate")) |>
+  tab_footnote(footnote = "Calculated from city parcel records.",
+               locations = cells_column_labels("rental_units"))
+```
+
+# aldermanic rates
+
+```{r aldermanic-dns-rates}
+aldermanic |>
+  mutate(aldermanic = english::ordinal(aldermanic)) |>
+  select(year, aldermanic, ends_with("rate")) |>
+  pivot_longer(cols = ends_with("rate")) |>
+  mutate(name = paste0(word(name, 1, sep = "_"),"s")) |>
+  pivot_wider(names_from = c(year, name), values_from = value) |>
+  gt(rowname_col = "aldermanic") |>
+  tab_spanner_delim("_") |>
+  fmt_number(columns = contains("_"), decimals = 1) |>
+  data_color(palette = "Greens", domain = 0:100) |>
+  tab_header(title = "Annual DNS code enforcement totals in the City of Milwaukee",
+             subtitle = "by Aldermanic district") |>
+  tab_footnote(footnote = "Various pandemic-era policy interventions, including moratoriums, reduced evictions during these years",
+               locations = cells_column_spanners(5:6))
+```

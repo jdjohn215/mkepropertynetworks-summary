@@ -13,7 +13,7 @@ library(purrr)
 library(gt)
 knitr::opts_chunk$set(warning = F, echo = F, message = F)
 
-overall.summary <- read_csv("overall-summary-stats.csv") |>
+overall.summary <- read_csv("data/overall-summary-stats.csv") |>
   pivot_wider(names_from = name, values_from = value)
 
 citywide <- read_csv("rates/annual-evict-rates_citywide.csv")

@@ -1,7 +1,5 @@
 on:
-  workflow_dispatch:
-  push:
-    branches: main
+  workflow_dispatch
 
 name: Quarto Publish
 
@@ -26,7 +24,13 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2 # automatically sets up cache
         with:
           packages: |
-            any::tidyverse 
+            any::tidyr
+            any::ggplot2
+            any::forcats
+            any::stringr
+            any::purr
+            any::readr
+            any::dplyr
             any::gt
             any::sf
             any::leaflet

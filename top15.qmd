@@ -3,7 +3,13 @@ title: "Largest 15 Networks"
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(stringr)
+library(purrr)
 library(gt)
 library(sf)
 library(leaflet)

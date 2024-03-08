@@ -3,7 +3,13 @@ title: "Code Violations"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(tidyverse)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(stringr)
+library(purrr)
 library(gt)
 knitr::opts_chunk$set(warning = F, echo = F, message = F)
 

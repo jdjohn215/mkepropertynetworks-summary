@@ -15,10 +15,10 @@ library(sf)
 library(leaflet)
 knitr::opts_chunk$set(warning = F, echo = F, message = F)
 
-mprop <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/LandlordProperties-with-OwnerNetworks.csv")
+mprop <- read_csv("data/LandlordProperties-with-OwnerNetworks.csv")
 overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
   pivot_wider(names_from = name, values_from = value)
-network.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/Landlord-network-summary-statistics.csv")
+network.summary <- read_csv("data/Landlord-network-summary-statistics.csv")
 
 top15 <- network.summary |> 
   slice_max(order_by = units, n = 15)

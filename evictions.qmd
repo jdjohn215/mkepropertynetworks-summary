@@ -13,11 +13,11 @@ library(purrr)
 library(gt)
 knitr::opts_chunk$set(warning = F, echo = F, message = F)
 
-overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+overall.summary <- read_csv("data/overall-summary-stats.csv") |>
   pivot_wider(names_from = name, values_from = value)
 
-citywide <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-evict-rates_citywide.csv")
-aldermanic <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/rates/annual-evict-rates_aldermanic2024.csv")
+citywide <- read_csv("data/rates/annual-evict-rates_citywide.csv")
+aldermanic <- read_csv("data/rates/annual-evict-rates_aldermanic2024.csv")
 ```
 
 

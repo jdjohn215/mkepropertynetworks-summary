@@ -13,10 +13,10 @@ library(purrr)
 library(gt)
 knitr::opts_chunk$set(warning = F, echo = F, message = F)
 
-mprop <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/LandlordProperties-with-OwnerNetworks.csv")
-overall.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/overall-summary-stats.csv") |>
+mprop <- read_csv("data/LandlordProperties-with-OwnerNetworks.csv")
+overall.summary <- read_csv("data/overall-summary-stats.csv") |>
   pivot_wider(names_from = name, values_from = value)
-network.summary <- read_csv("https://raw.githubusercontent.com/jdjohn215/mke-owner-networks/main/data/Landlord-network-summary-statistics.csv") |>
+network.summary <- read_csv("data/Landlord-network-summary-statistics.csv") |>
   mutate(
     parcel_size_cat = case_when(
       parcels == 1 ~ "1 parcel",

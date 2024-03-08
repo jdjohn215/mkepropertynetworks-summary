@@ -28,7 +28,7 @@ jobs:
             any::ggplot2
             any::forcats
             any::stringr
-            any::purr
+            any::purrr
             any::readr
             any::dplyr
             any::gt

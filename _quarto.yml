@@ -10,6 +10,7 @@ website:
       - top15.qmd
       - evictions.qmd
       - code-enforcement.qmd
+      - census-comparison.qmd
 
 format:
   html:

@@ -1,0 +1,28 @@
+---
+title: "Comparison with Census data"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(readr)
+library(dplyr)
+knitr::opts_chunk$set(warning = F, echo = F, message = F)
+
+network.summary <- read_csv("data/Landlord-network-summary-statistics.csv")
+pnum <- function(x){prettyNum(x, big.mark = ",")}
+
+rental.units <- sum(network.summary$units)
+```
+
+Census data also measures housing units and tenure, providing a useful external check on our measurements.
+
+The 2020 decennial census counted 257,700 total housing units in the city, of which 92,900 were owner-occupied and 154,500 were rented or listed for rent. (The remainder were unoccupied, but not for rent).
+
+The 2022 1-year American Community Survey (ACS) estimated a total of 261,200 housing units with a margin of error of about 3,800. Of those, the ACS estimated that 96,000 were owner-occupied (MOE of 4,300) and 147,600 were rentals (MOE of 4,800).
+
+We measure the owner-occupation of a parcel by comparing the address to which the property taxes are mailed with the situs address(es) of the property. If they match *and* the property is coded as a non-apartment building, we consider it owner-occupied. Our measure closely matches census estimates of total owner-occupied housing units, as the graph below shoes.
+
+![](OwnerOccupancyComparison_v2.png)
+
+We identify residential housing units using the city assessor's residential housing units field and removing parcels which are owner occupied. This means we consider duplexes owner-occupied when the owner lives at the property, regardless of whether or not they rent out their additional unit. This situation also affects a small number of owner-occupied triplexes and quadplexes.
+
+For these reasons, we expect our count of rental units to slightly undercount rental units relative to the true total. Currently, we count `r pnum(rental.units)` rental units, compared to 154,500 in the 2020 census count and 147,600 in the 2022 ACS estimate. Considering the different methods for generating these statistics, we are satisfied with this general agreement across data sources.

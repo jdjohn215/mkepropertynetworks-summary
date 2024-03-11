@@ -1,7 +1,5 @@
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '30 1 * * 1-5' # Mon-Fri, 1:30AM UTC / 7PM CST
   push:
     branches:
       - 'main'

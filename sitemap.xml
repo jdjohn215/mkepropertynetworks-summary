@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/index.html</loc>
-    <lastmod>2024-10-11T01:33:23.094Z</lastmod>
-  </url>
-  <url>
     <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/code-enforcement.html</loc>
-    <lastmod>2024-10-11T01:33:22.990Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/evictions.html</loc>
-    <lastmod>2024-10-11T01:33:23.094Z</lastmod>
+    <lastmod>2024-10-14T01:57:23.667Z</lastmod>
   </url>
   <url>
     <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/census-comparison.html</loc>
-    <lastmod>2024-10-11T01:33:22.990Z</lastmod>
+    <lastmod>2024-10-14T01:57:23.667Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/index.html</loc>
+    <lastmod>2024-10-14T01:57:23.761Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/evictions.html</loc>
+    <lastmod>2024-10-14T01:57:23.760Z</lastmod>
   </url>
   <url>
     <loc>https://jdjohn215.github.io/mkepropertynetworks-summary/top15.html</loc>
-    <lastmod>2024-10-11T01:33:23.094Z</lastmod>
+    <lastmod>2024-10-14T01:57:23.762Z</lastmod>
   </url>
 </urlset>

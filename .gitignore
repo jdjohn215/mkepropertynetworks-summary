@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/.quarto/
+mkepropertynetworks-summary.Rproj
+explore-unit-totals.R
+outline
+.DS_Store

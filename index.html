@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c98d9d0b3b0a085d3ddf71e6e91476d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6ac2aec46ad7f46b16024ee4409aa65c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -155,8 +158,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This website includes summary statistics from <a href="https://mkepropertyownership.com/">MKEPropertyOwnership.com</a>. Property data was last updated on 2026-07-20. We last checked for new updates on 2026-07-24. You can view the underlying source code and download raw data from <a href="https://github.com/jdjohn215/mke-owner-networks">this Github repository</a>.</p>
-<p>Currently, we identify 47,059 rental properties containing 144,716 housing units. We identify 19,787 total ownership networks of which 14,127 (71%) own just a single property. Of those networks which own multiple properties, 3,781 include multiple distinct owner names.</p>
+<p>This website includes summary statistics from <a href="https://mkepropertyownership.com/">MKEPropertyOwnership.com</a>. Property data was last updated on 2026-07-22. We last checked for new updates on 2026-07-27. You can view the underlying source code and download raw data from <a href="https://github.com/jdjohn215/mke-owner-networks">this Github repository</a>.</p>
+<p>Currently, we identify 47,052 rental properties containing 144,707 housing units. We identify 19,789 total ownership networks of which 14,121 (71%) own just a single property. Of those networks which own multiple properties, 3,781 include multiple distinct owner names.</p>
 <section id="networks-by-size" class="level1">
 <h1>networks by size</h1>
 <p>Most landlord networks are small. In fact, 71% of networks own just a single parcel. Another 18% own 2 or 3 parcels. Together, these two categories own 47% of all the rental parcels in the city. Collectively, ownership networks with at least 26 parcels own 21% of rental parcels, despite constituting just 0.7% of owner networks.</p>
@@ -185,23 +188,23 @@ ul.task-list li input[type="checkbox"] {
 <h1>largest networks</h1>
 <div class="cell">
 <div class="cell-output-display">
-<div id="mqoaeexwch" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mqoaeexwch table {
+<div id="bjknogdhls" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bjknogdhls table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mqoaeexwch thead, #mqoaeexwch tbody, #mqoaeexwch tfoot, #mqoaeexwch tr, #mqoaeexwch td, #mqoaeexwch th {
+#bjknogdhls thead, #bjknogdhls tbody, #bjknogdhls tfoot, #bjknogdhls tr, #bjknogdhls td, #bjknogdhls th {
   border-style: none;
 }
 
-#mqoaeexwch p {
+#bjknogdhls p {
   margin: 0;
   padding: 0;
 }
 
-#mqoaeexwch .gt_table {
+#bjknogdhls .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -227,12 +230,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_caption {
+#bjknogdhls .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mqoaeexwch .gt_title {
+#bjknogdhls .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -244,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#mqoaeexwch .gt_subtitle {
+#bjknogdhls .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -256,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#mqoaeexwch .gt_heading {
+#bjknogdhls .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -268,13 +271,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_bottom_border {
+#bjknogdhls .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_col_headings {
+#bjknogdhls .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -289,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_col_heading {
+#bjknogdhls .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -309,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#mqoaeexwch .gt_column_spanner_outer {
+#bjknogdhls .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -321,15 +324,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#mqoaeexwch .gt_column_spanner_outer:first-child {
+#bjknogdhls .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mqoaeexwch .gt_column_spanner_outer:last-child {
+#bjknogdhls .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mqoaeexwch .gt_column_spanner {
+#bjknogdhls .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -341,11 +344,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#mqoaeexwch .gt_spanner_row {
+#bjknogdhls .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mqoaeexwch .gt_group_heading {
+#bjknogdhls .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -371,7 +374,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#mqoaeexwch .gt_empty_group_heading {
+#bjknogdhls .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -386,15 +389,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#mqoaeexwch .gt_from_md > :first-child {
+#bjknogdhls .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mqoaeexwch .gt_from_md > :last-child {
+#bjknogdhls .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mqoaeexwch .gt_row {
+#bjknogdhls .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -413,7 +416,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#mqoaeexwch .gt_stub {
+#bjknogdhls .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -426,7 +429,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mqoaeexwch .gt_stub_row_group {
+#bjknogdhls .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -440,15 +443,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#mqoaeexwch .gt_row_group_first td {
+#bjknogdhls .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mqoaeexwch .gt_row_group_first th {
+#bjknogdhls .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mqoaeexwch .gt_summary_row {
+#bjknogdhls .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -458,16 +461,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mqoaeexwch .gt_first_summary_row {
+#bjknogdhls .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_first_summary_row.thick {
+#bjknogdhls .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mqoaeexwch .gt_last_summary_row {
+#bjknogdhls .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -477,7 +480,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_grand_summary_row {
+#bjknogdhls .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -487,7 +490,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mqoaeexwch .gt_first_grand_summary_row {
+#bjknogdhls .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -497,7 +500,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_last_grand_summary_row_top {
+#bjknogdhls .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -507,11 +510,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_striped {
+#bjknogdhls .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mqoaeexwch .gt_table_body {
+#bjknogdhls .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -520,7 +523,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_footnotes {
+#bjknogdhls .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -534,7 +537,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_footnote {
+#bjknogdhls .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -543,7 +546,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mqoaeexwch .gt_sourcenotes {
+#bjknogdhls .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -557,7 +560,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mqoaeexwch .gt_sourcenote {
+#bjknogdhls .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -565,72 +568,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mqoaeexwch .gt_left {
+#bjknogdhls .gt_left {
   text-align: left;
 }
 
-#mqoaeexwch .gt_center {
+#bjknogdhls .gt_center {
   text-align: center;
 }
 
-#mqoaeexwch .gt_right {
+#bjknogdhls .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mqoaeexwch .gt_font_normal {
+#bjknogdhls .gt_font_normal {
   font-weight: normal;
 }
 
-#mqoaeexwch .gt_font_bold {
+#bjknogdhls .gt_font_bold {
   font-weight: bold;
 }
 
-#mqoaeexwch .gt_font_italic {
+#bjknogdhls .gt_font_italic {
   font-style: italic;
 }
 
-#mqoaeexwch .gt_super {
+#bjknogdhls .gt_super {
   font-size: 65%;
 }
 
-#mqoaeexwch .gt_footnote_marks {
+#bjknogdhls .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mqoaeexwch .gt_asterisk {
+#bjknogdhls .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mqoaeexwch .gt_indent_1 {
+#bjknogdhls .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mqoaeexwch .gt_indent_2 {
+#bjknogdhls .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mqoaeexwch .gt_indent_3 {
+#bjknogdhls .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mqoaeexwch .gt_indent_4 {
+#bjknogdhls .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mqoaeexwch .gt_indent_5 {
+#bjknogdhls .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mqoaeexwch .katex-display {
+#bjknogdhls .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mqoaeexwch div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bjknogdhls div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -680,9 +683,9 @@ annual rates per 100 units
 <tr class="even">
 <td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/CITY%20OF%20MILWAUKEE%20etc%20Group">CITY OF MILWAUKEE etc Group</a></td>
 <td class="gt_row gt_right" headers="name_count">39</td>
-<td class="gt_row gt_right" headers="units">4,422</td>
-<td class="gt_row gt_right" headers="parcels">764</td>
-<td class="gt_row gt_right" headers="total_assessed_value">$13.7M</td>
+<td class="gt_row gt_right" headers="units">4,404</td>
+<td class="gt_row gt_right" headers="parcels">754</td>
+<td class="gt_row gt_right" headers="total_assessed_value">$13.5M</td>
 <td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">2.9</td>
 <td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">2.6</td>
 </tr>
@@ -696,21 +699,21 @@ annual rates per 100 units
 <td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">0.3</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/1007%20MARSHALL%20LLC%20etc%20Group">1007 MARSHALL LLC etc Group</a></td>
-<td class="gt_row gt_right" headers="name_count">28</td>
-<td class="gt_row gt_right" headers="units">1,796</td>
-<td class="gt_row gt_right" headers="parcels">28</td>
-<td class="gt_row gt_right" headers="total_assessed_value">$242.3M</td>
-<td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">3.6</td>
-<td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">1.8</td>
-</tr>
-<tr class="odd">
 <td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/METROPOLITAN%20ASSOCIATES%20FKA,%20METROPOLITAN%20HOLDING%20CO%20etc%20Group">METROPOLITAN ASSOCIATES FKA, METROPOLITAN HOLDING CO etc Group</a></td>
 <td class="gt_row gt_right" headers="name_count">11</td>
 <td class="gt_row gt_right" headers="units">1,795</td>
 <td class="gt_row gt_right" headers="parcels">18</td>
 <td class="gt_row gt_right" headers="total_assessed_value">$163.1M</td>
 <td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">7.2</td>
+<td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">1.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/1007%20MARSHALL%20LLC%20etc%20Group">1007 MARSHALL LLC etc Group</a></td>
+<td class="gt_row gt_right" headers="name_count">25</td>
+<td class="gt_row gt_right" headers="units">1,715</td>
+<td class="gt_row gt_right" headers="parcels">25</td>
+<td class="gt_row gt_right" headers="total_assessed_value">$231.9M</td>
+<td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">3.6</td>
 <td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">1.7</td>
 </tr>
 <tr class="even">
@@ -742,12 +745,12 @@ annual rates per 100 units
 </tr>
 <tr class="odd">
 <td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/TE%20XVI%20LLC%20etc%20Group">TE XVI LLC etc Group</a></td>
-<td class="gt_row gt_right" headers="name_count">34</td>
-<td class="gt_row gt_right" headers="units">1,128</td>
+<td class="gt_row gt_right" headers="name_count">35</td>
+<td class="gt_row gt_right" headers="units">1,143</td>
 <td class="gt_row gt_right" headers="parcels">212</td>
-<td class="gt_row gt_right" headers="total_assessed_value">$86.3M</td>
-<td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">31.0</td>
-<td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">21.6</td>
+<td class="gt_row gt_right" headers="total_assessed_value">$87.0M</td>
+<td class="gt_row gt_right" headers="annual_evict_filing_rate_per_unit">29.9</td>
+<td class="gt_row gt_right" headers="ownership_violation_unit_rate_annual">20.8</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_center" headers="final_group" style="text-align: right; font-weight: bold; border-right-width: 2px; border-right-style: solid; border-right-color: #000000;"><a href="https://mkepropertyownership.com/owner_groups/CAPITAL%2048%20LLC%20etc%20Group">CAPITAL 48 LLC etc Group</a></td>
